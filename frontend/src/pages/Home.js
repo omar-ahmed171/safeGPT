@@ -1,17 +1,25 @@
-// Home.js
+// src/components/LandingPage.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
-    return <div>Home Page</div>;
+const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleGuestAccess = () => {
+    navigate('/guest');
+  };
+
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
+  return (
+    <div>
+      <h1>Welcome to SafeGPT</h1>
+      <button onClick={handleGuestAccess}>Enter as Guest</button>
+      <button onClick={handleRegister}>Register</button>
+    </div>
+  );
 };
 
-export default Home;
-
-// About.js
-// import React from 'react';
-
-// const About = () => {
-//     return <div>About Page</div>;
-// };
-
-// export { About };
+export default LandingPage;
