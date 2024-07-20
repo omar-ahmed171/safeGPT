@@ -1,15 +1,25 @@
+// src/components/LandingPage.js
 import React from 'react';
-import EmergencyProcedures from '../components/EmergencyProcedures';
-import SafetyPlans from '../components/SafetyPlans';
+import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
-    return (
-        <div>
-            <h1>Dashboard</h1>
-            <EmergencyProcedures />
-            <SafetyPlans />
-        </div>
-    );
+const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleGuestAccess = () => {
+    navigate('/guest');
+  };
+
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
+  return (
+    <div>
+      <h1>Welcome to SafeGPT</h1>
+      <button onClick={handleGuestAccess}>Enter as Guest</button>
+      <button onClick={handleRegister}>Register</button>
+    </div>
+  );
 };
 
-export default Dashboard;
+export default LandingPage;

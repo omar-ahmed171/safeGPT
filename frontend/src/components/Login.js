@@ -1,63 +1,41 @@
+// src/components/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  });
+  const navigate = useNavigate();
 
-    const { email, password } = formData;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prevState) => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/users/login', credentials);
+      localStorage.setItem('token', response.data.token); // Store the token in localStorage
+      navigate('/chat'); // Redirect to chat page
+    } catch (error) {
+      console.error('Error logging in', error);
+    }
+  };
 
-    const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        const user = {
-            email,
-            password,
-        };
-
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-
-            const body = JSON.stringify(user);
-
-            const res = await axios.post('/api/auth/login', body, config);
-
-            localStorage.setItem('token', res.data.token);
-
-            navigate('/dashboard');
-        } catch (err) {
-            setError(err.response.data.msg);
-        }
-    };
-
-    return (
-        <div>
-            <h1>Login</h1>
-            {error && <p>{error}</p>}
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input type="email" name="email" value={email} onChange={onChange} required />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" name="password" value={password} onChange={onChange} required />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    );
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+      <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+      <button type="submit">Login</button>
+    </form>
+  );
 };
 
 export default Login;

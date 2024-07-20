@@ -1,103 +1,74 @@
-import React, { useState } from 'react';
+// src/pages/Chat.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Chat = () => {
-    const [profile, setProfile] = useState({
-        name: '',
-        age: '',
-        healthConditions: ''
-    });
-    const [scenario, setScenario] = useState('');
-    const [response, setResponse] = useState('');
-    const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            console.log('profile:', profile);
-            console.log('scenario:', scenario);
-            
-            // Using fetch to make the POST request
-            const response = await fetch('/api/chat/ask', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ profile, scenario })
-            });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login'); // Redirect to login if no token is found
+    }
+  }, [navigate]);
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
 
-            const data = await response.json();
-            console.log('data:', data);
-            setResponse(data.response);
+  const handleSendMessage = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login'); // Redirect to login if no token is found
+      return;
+    }
 
-        } catch (error) {
-            console.error('Error fetching ChatGPT response:', error);
-            setResponse('Sorry, there was an error.');
+    try {
+      const response = await axios.post(
+        '/api/openai/generate',
+        { message: input },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        setLoading(false);
-    };
+      );
+      setMessages([...messages, { text: input, user: true }, { text: response.data.text, user: false }]);
+      setInput('');
+    } catch (error) {
+      console.error('Error generating response', error);
+    }
+  };
 
-    return (
-        <div>
-            <h2>Chat with Assistant</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <h3>User Profile</h3>
-                    <label>
-                        Name:
-                        <input
-                            type="text"
-                            value={profile.name}
-                            onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Age:
-                        <input
-                            type="number"
-                            value={profile.age}
-                            onChange={(e) => setProfile({ ...profile, age: e.target.value })}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Health Conditions:
-                        <input
-                            type="text"
-                            value={profile.healthConditions}
-                            onChange={(e) => setProfile({ ...profile, healthConditions: e.target.value })}
-                        />
-                    </label>
-                </div>
-                <br />
-                <div>
-                    <h3>Emergency Scenario</h3>
-                    <textarea
-                        value={scenario}
-                        onChange={(e) => setScenario(e.target.value)}
-                        placeholder="Describe the emergency scenario..."
-                        rows="4"
-                        cols="50"
-                    />
-                </div>
-                <br />
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Sending...' : 'Send'}
-                </button>
-            </form>
-            {response && (
-                <div>
-                    <h3>Response:</h3>
-                    <p>{response}</p>
-                </div>
-            )}
-        </div>
-    );
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <div>
+      <h1>Chat</h1>
+      <div className="chat-box">
+        {messages.map((message, index) => (
+          <div key={index} className={message.user ? 'user-message' : 'bot-message'}>
+            {message.text}
+          </div>
+        ))}
+      </div>
+      <input
+        type="text"
+        value={input}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
+        placeholder="Type your message here..."
+      />
+      <button onClick={handleSendMessage}>Send</button>
+    </div>
+  );
 };
 
 export default Chat;
