@@ -1,42 +1,36 @@
-// routes/openaiClient.js
-const express = require('express');
-const router = express.Router();
-const auth = require('../middleware/auth');
-const openai = require('openai'); // Import OpenAI client
+const { OpenAI } = require('openai');
+const dotenv = require('dotenv');
 
-// Your OpenAI configuration and setup
-openai.apiKey = 'your_openai_api_key';
 
-// OpenAI route
-router.post('/generate', auth, async (req, res) => {
-  try {
-    const userData = req.user;
+// Load environment variables
+dotenv.config();
 
-    // Construct the prompt using user data
-    const prompt = `User information:
-    Name: ${userData.name}
-    Age: ${userData.age}
-    Weight: ${userData.weight}
-    Height: ${userData.height}
-    Sex: ${userData.sex}
-    Diseases: ${userData.diseases}
-    Wheelchair user: ${userData.wheelchair ? 'Yes' : 'No'}
-
-    Please provide the relevant information or response based on the above data.`;
-
-    const response = await openai.Completion.create({
-      engine: 'davinci',
-      prompt: prompt,
-      max_tokens: 150,
-      n: 1,
-      stop: null,
-      temperature: 0.7,
-    });
-
-    res.json({ text: response.choices[0].text });
-  } catch (error) {
-    res.status(500).send('Error generating response from OpenAI');
-  }
+// Initialize OpenAI client
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
 });
+ console.log('OpenAI API Key:', process.env.OPENAI_API_KEY);const getChatGPTResponse = async (profile, scenario) => {
+    try {
+        console.log('User Profile:', profile);
+        const messages = [
+            { role: 'system', content: 'You are a helpful assistant.' },
+            { role: 'user', content: `User Profile: ${JSON.stringify(profile)}` },
+            { role: 'user', content: `Emergency Scenario: ${scenario}` },
+            { role: 'user', content: 'Provide personalized advice based on the user\'s profile and the emergency scenario.' }
+        ];
+        console.log('OpenAI messages:', messages);
+        const response = await openai.chat.completions.create({
+            model: 'gpt-3.5-turbo', // Adjust if using another model
+            messages: messages,
+            max_tokens: 150,
+            temperature: 0.7,
+        });
+        console.log('OpenAI response:', response);
+        return response.choices[0].message.content.trim();
+    } catch (error) {
+        console.error('Error communicating with OpenAI:', error);
+        throw new Error('Error communicating with OpenAI');
+    }
+};
 
-module.exports = router;
+module.exports = { getChatGPTResponse };

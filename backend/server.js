@@ -3,11 +3,12 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 // Load environment variables
 dotenv.config();
 
 // Connect to MongoDB
-// connectDB();
+connectDB();
 
 const app = express();
 
@@ -16,18 +17,10 @@ app.use(express.json());
 
 // Routes
 app.use('/api/users', userRoutes);
-//app.use('/api', guestRoutes);
 app.use('/api/protected', protectedRoutes);
+app.use('/api/chat', chatRoutes);
 
 
-
-// app.use('/api/users', require('./routes/userRoutes'));
-// //console.log('User Routes:', userRoutes);
-// app.use('/api/auth', require('./routes/authRoutes'));
-
-// // app.use('/api/emergencies', require('./routes/emergencyRoutes'));
-// // app.use('/api/health', require('./routes/healthRoutes'));
-// app.use('/api/chat', require('./routes/chatRoutes'));
 
 // Port
 const PORT = process.env.PORT || 5000;
