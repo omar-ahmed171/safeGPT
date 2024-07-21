@@ -4,13 +4,14 @@ const router = express.Router();
 const auth = require('../middleware/authMiddleware');
 const { getChatGPTResponse } = require('../utils/openaiClient');
 router.post('/ask', auth, async (req, res) => {
-    const { profile, scenario } = req.body;
+    const profile = req.user; // Full user profile
+    const { scenario } = req.body;
+
     try {
-        const response = await getChatGPTResponse(profile, scenario);
-        res.json({ response });
+        const responseText = await getChatGPTResponse(profile, scenario);
+        res.json({ response: responseText });
     } catch (error) {
-        console.error('Error in /api/chat/ask:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ message: 'Error generating response', error });
     }
 });
 

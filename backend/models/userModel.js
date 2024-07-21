@@ -6,9 +6,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     dateOfBirth: { type: Date },
     gender: { type: String },
-   
     bloodType: { type: String },
-   
     sleepPatterns: { type: String },
     stressLevels: { type: String },
     height: { type: String },
@@ -17,6 +15,14 @@ const userSchema = new mongoose.Schema({
     alcohol: { type: Boolean },
     recentCheckup: { type: Boolean },
     wheelchair: { type: Boolean },
+    chronicConditions: { type: String },
+    allergies: { type: String },
+    medications: { type: String },
+    exerciseFrequency: { type: String },
+    dietaryPreferences: { type: String },
+    healthGoals: { type: String },
+    insuranceProvider: { type: String },
+    policyNumber: { type: String },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,0 +1,85 @@
+/* src/App.css or src/Chat.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .chat-box {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    height: 500px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;
+  }
+  
+  .user-message,
+  .bot-message {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+  
+  .user-message {
+    background-color: #e0f7fa;
+    align-self: flex-end;
+    color: #00796b;
+  }
+  
+  .bot-message {
+    background-color: #eeeeee;
+    align-self: flex-start;
+    color: #333;
+  }
+  
+  input[type="text"] {
+    width: calc(100% - 90px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+    outline: none;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #00796b;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+  }
+  
+  input[type="text"]::placeholder {
+    color: #aaa;
+  }
+  
+  .chat-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  

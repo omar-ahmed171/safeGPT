@@ -1,17 +1,27 @@
-// src/pages/Chat.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // Correct import for jwtDecode
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
             navigate('/login'); // Redirect to login if no token is found
+        } else {
+            try {
+                const decodedProfile = jwtDecode(token);
+                console.log('Decoded profile:', decodedProfile); // Log decoded profile for debugging
+                setProfile(decodedProfile);
+            } catch (error) {
+                console.error('Error decoding token:', error);
+                navigate('/login');
+            }
         }
     }, [navigate]);
 
@@ -26,16 +36,12 @@ const Chat = () => {
             return;
         }
 
+        if (!profile) {
+            console.error('Profile not loaded');
+            return;
+        }
+
         try {
-            const profile = {
-                name: "John Doe",
-                age: 30,
-                weight: "70kg",
-                height: "180cm",
-                sex: "Male",
-                diseases: "None",
-                wheelchair: false,
-            };
             const scenario = input;
 
             const response = await axios.post(
@@ -47,6 +53,7 @@ const Chat = () => {
                     },
                 }
             );
+            console.log('Backend response:', response.data); // Log response for debugging
             setMessages([...messages, { text: input, user: true }, { text: response.data.response, user: false }]);
             setInput('');
         } catch (error) {
@@ -70,14 +77,16 @@ const Chat = () => {
                     </div>
                 ))}
             </div>
-            <input
-                type="text"
-                value={input}
-                onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
-                placeholder="Type your message here..."
-            />
-            <button onClick={handleSendMessage}>Send</button>
+            <div className="chat-input">
+                <input
+                    type="text"
+                    value={input}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Type your message here..."
+                />
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
         </div>
     );
 };
