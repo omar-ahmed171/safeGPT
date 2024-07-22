@@ -41,28 +41,25 @@ router.post('/check', auth, async (req, res) => {
 });
 
 router.post('/first-aid', auth, async (req, res) => {
-  const { query } = req.body;
-
-  try {
-    const messages = [
-      { role: 'system', content: 'You are a first aid assistant. Provide step-by-step first aid instructions based on the given query.' },
-      { role: 'user', content: `The user needs first aid advice for the following situation: ${query}. Please provide step-by-step instructions.` },
-    ];
-    const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: messages,
-      max_tokens: 200,
-      temperature: 0.7,
-    });
-    const responseText = response.choices[0].message.content.trim();
-    res.json({ message: responseText });
-  } catch (error) {
-    console.error('Error fetching first aid advice:', error);
-    res.status(500).json({ message: 'Error fetching first aid advice', error });
-  }
-});
-
-
-
-
-module.exports = router;
+    const { scenario } = req.body;
+  
+    try {
+      const messages = [
+        { role: 'system', content: 'You are a first aid assistant. Provide step-by-step first aid instructions based on the given scenario.' },
+        { role: 'user', content: `The user needs first aid advice for the following scenario: ${scenario}. Please provide step-by-step instructions.` },
+      ];
+      const response = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: messages,
+        max_tokens: 200,
+        temperature: 0.7,
+      });
+      const responseText = response.choices[0].message.content.trim();
+      res.json({ message: responseText });
+    } catch (error) {
+      console.error('Error fetching first aid advice:', error);
+      res.status(500).json({ message: 'Error fetching first aid advice', error });
+    }
+  });
+  
+  module.exports = router;
