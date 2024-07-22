@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Login from './components/Login';
 import SymptomChecker from './components/SymptomChecker';
 import ProtectedRoute from './components/protectedRoutes';
+import FirstAid from './components/FirstAidTips';
 
 const App = () => (
     <Routes>
@@ -14,6 +15,7 @@ const App = () => (
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/symptom-checker" element={<SymptomChecker />} />
+        <Route path="/first-aid" element={<FirstAid />} />
     </Routes>
 );
 
