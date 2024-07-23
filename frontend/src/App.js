@@ -8,6 +8,7 @@ import SymptomChecker from './components/SymptomChecker';
 import ProtectedRoute from './components/protectedRoutes';
 import FirstAid from './components/FirstAidTips';
 import Navbar from './components/Navbar';
+import MedicalDocumentUpload from './components/MedicalDocumentUpload';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +37,7 @@ const App = () => {
                 <Route path="/chat" element={<ProtectedRoute element={<Chat />} />} />
                 <Route path="/symptom-checker" element={<SymptomChecker />} />
                 <Route path="/first-aid" element={<FirstAid />} />
+                <Route path="/doc" element={<MedicalDocumentUpload />} />
             </Routes>
         </>
     );

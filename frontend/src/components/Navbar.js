@@ -14,6 +14,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
                         <li className="navbar-item" onClick={() => navigate('/chat')}>Chat</li>
                         <li className="navbar-item" onClick={() => navigate('/symptom-checker')}>Symptom Checker</li>
                         <li className="navbar-item" onClick={() => navigate('/first-aid')}>First Aid</li>
+                        <li className="navbar-item" onClick={() => navigate('/doc')}>Upload Medical Documents</li>
                         <li className="navbar-item" onClick={handleLogout}>Logout</li>
                     </>
                 ) : (

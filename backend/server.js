@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const chatRoutes = require('./routes/chatRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 // Load environment variables
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/protected', protectedRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/medical-documents', healthRoutes);
 
 
 
