@@ -19,22 +19,18 @@ const Register = () => {
         alcohol: false,
         recentCheckup: false,
         wheelchair: false,
-        emergencyContactName: '',
-        emergencyContactRelationship: '',
-        emergencyContactPhone: '',
         chronicConditions: '',
         allergies: '',
         medications: '',
         exerciseFrequency: '',
         dietaryPreferences: '',
-        healthGoals: '',
         insuranceProvider: '',
         policyNumber: ''
     });
 
     const navigate = useNavigate();
     const {
-        name, email, password, dateOfBirth, gender, bloodType, sleepPatterns, stressLevels, height, weight, smoking, alcohol, recentCheckup, wheelchair, emergencyContactName, emergencyContactRelationship, emergencyContactPhone, chronicConditions, allergies, medications, exerciseFrequency, dietaryPreferences, healthGoals, insuranceProvider, policyNumber
+        name, email, password, dateOfBirth, gender, bloodType, sleepPatterns, stressLevels, height, weight, smoking, alcohol, recentCheckup, wheelchair, chronicConditions, allergies, medications, exerciseFrequency, dietaryPreferences, insuranceProvider, policyNumber
     } = formData;
 
     const genderOptions = ['Male', 'Female'];
@@ -61,15 +57,6 @@ const Register = () => {
 
     return (
         <div className="register-page">
-            {/* <nav className="navbar">
-                <ul>
-                    <li onClick={() => navigate('/')}>Home</li>
-                    <li onClick={() => navigate('/login')}>Login</li>
-                    <li onClick={() => navigate('/register')}>Register</li>
-                    <li onClick={() => navigate('/symptom-checker')}>Symptom Checker</li>
-                    <li onClick={() => navigate('/first-aid')}>First Aid</li>
-                </ul>
-            </nav> */}
             <div className="register-container">
                 <form onSubmit={onSubmit} className="register-form">
                     <h2 className="register-title">Register</h2>

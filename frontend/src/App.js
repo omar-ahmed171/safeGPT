@@ -31,9 +31,9 @@ const App = () => {
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/chat" element={<ProtectedRoute element={<Chat />} />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/chat" element={<ProtectedRoute element={<Chat />} />} />
                 <Route path="/symptom-checker" element={<SymptomChecker />} />
                 <Route path="/first-aid" element={<FirstAid />} />
             </Routes>

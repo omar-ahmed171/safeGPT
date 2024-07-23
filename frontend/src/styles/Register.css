@@ -35,7 +35,6 @@ body {
     padding: 10px 20px;
     cursor: pointer;
     color: #FFF;
-
 }
 
 .navbar ul li:hover {
@@ -48,10 +47,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     width: 100%;
-    padding-top: 60px; /* To ensure content is not hidden behind the navbar */
-    overflow-y: auto; /* Allow vertical scrolling if content overflows */
+    padding-top: 80px;
+    overflow-y: auto;
 }
 
 .register-container {
@@ -62,10 +60,9 @@ body {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
     text-align: center;
     animation: fadeIn 2s ease-in-out;
-    max-width: 900px;
+    max-width: 1200px; /* Increase the width of the form container */
     width: 100%;
     margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 .register-title {
@@ -85,15 +82,17 @@ body {
 
 .row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
     gap: 20px;
 }
 
 .column {
-    flex: 1;
+    flex: 1 1 45%;
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .input-field, .select-field {
@@ -115,7 +114,6 @@ body {
 }
 
 .checkbox-label {
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -164,4 +162,45 @@ body {
     0% { transform: scale(0.5); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .register-container {
+        padding: 30px 20px;
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 992px) {
+    .register-container {
+        padding: 20px 15px;
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+    
+    .column {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .register-container {
+        padding: 20px 10px;
+        max-width: 100%;
+    }
+    
+    .register-title {
+        font-size: 2em;
+    }
+    
+    .submit-btn {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
 }
