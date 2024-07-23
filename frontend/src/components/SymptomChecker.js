@@ -25,16 +25,12 @@ const SymptomChecker = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('SymptomChecker');
     const token = localStorage.getItem('token');
-    console.log('Token:', token); // Log token for debugging
-
     if (!token) {
       navigate('/login'); // Redirect to login if no token is found
     } else {
       try {
         const decodedProfile = jwtDecode(token);
-        console.log('Decoded Profile:', decodedProfile); // Log decoded profile for debugging
         setProfile(decodedProfile);
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -60,7 +56,6 @@ const SymptomChecker = () => {
     setLoading(true);
     setResponse('');
     try {
-      console.log('Selected symptoms:', selectedSymptoms); // Log selected symptoms for debugging
       const res = await axios.post(
         '/api/users/check',
         { profile, symptoms: selectedSymptoms },
@@ -70,7 +65,6 @@ const SymptomChecker = () => {
           },
         }
       );
-      console.log('Backend response:', res.data); // Log response for debugging
       setResponse(res.data.message);
     } catch (error) {
       console.error('Error submitting symptoms:', error);
@@ -80,29 +74,24 @@ const SymptomChecker = () => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSendSymptoms();
-    }
-  };
-
   return (
-    <div>
-      <h1>Symptom Checker</h1>
-      <form>
+    <div className="symptom-checker-container">
+      <h1 className="title">Symptom Checker</h1>
+      <form className="symptom-form">
         <div className="symptom-list">
           {symptomList.map((symptom) => (
-            <div key={symptom}>
+            <div key={symptom} className="symptom-item">
               <input
                 type="checkbox"
                 name={symptom}
+                id={symptom}
                 onChange={handleCheckboxChange}
               />
-              <label>{symptom}</label>
+              <label htmlFor={symptom}>{symptom}</label>
             </div>
           ))}
         </div>
-        <button type="button" onClick={handleSendSymptoms} disabled={loading}>
+        <button type="button" onClick={handleSendSymptoms} disabled={loading} className="btn">
           {loading ? 'Checking...' : 'Check Symptoms'}
         </button>
       </form>

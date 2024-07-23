@@ -1,85 +1,125 @@
-/* src/App.css or src/Chat.css */
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
     margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #FF1D58, #0049B7);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  .chat-box {
-    background-color: #fff;
-    width: 100%;
-    max-width: 600px;
-    height: 500px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    color: #FFF;
+}
+
+.chat-page {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-y: scroll;
-  }
-  
-  .user-message,
-  .bot-message {
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    max-width: 70%;
-    word-wrap: break-word;
-  }
-  
-  .user-message {
-    background-color: #e0f7fa;
-    align-self: flex-end;
-    color: #00796b;
-  }
-  
-  .bot-message {
-    background-color: #eeeeee;
-    align-self: flex-start;
-    color: #333;
-  }
-  
-  input[type="text"] {
-    width: calc(100% - 90px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    margin-right: 10px;
-    outline: none;
-  }
-  
-  button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    background-color: #00796b;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-  }
-  
-  input[type="text"]::placeholder {
-    color: #aaa;
-  }
-  
-  .chat-input {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-  }
-  
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chat-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: slideInLeft 1s ease-in-out;
+}
+
+.chat-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 800px;
+    height: 60vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.user-message {
+    align-self: flex-end;
+    background: #0049B7;
+    color: #FFF;
+    padding: 10px 20px;
+    border-radius: 15px 15px 0 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 60%;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background: #FFF;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 15px 15px 15px 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 60%;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.input-field {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+}
+
+.input-field:focus {
+    box-shadow: 0 0 10px rgba(0, 73, 183, 0.5);
+    outline: none;
+}
+
+.send-btn {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    color: #FFF;
+    background-color: #0049B7;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transformcss
+0.3s, background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px rgba(0, 73, 183, 0.3);
+    animation: bounceIn 0.5s ease-in-out;
+}
+
+.send-btn:hover {
+    background-color: #003580;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 73, 183, 0.5);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}

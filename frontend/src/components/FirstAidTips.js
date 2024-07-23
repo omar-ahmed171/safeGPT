@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../App.css';
+import '../styles/FirstAid.css';
 
 const scenarioOptions = [
   { label: 'Burn', value: 'burn' },
@@ -54,9 +54,9 @@ const FirstAid = () => {
   };
 
   return (
-    <div>
-      <h1>First Aid</h1>
-      <div>
+    <div className="firstaid-container">
+      <h1 className="title">First Aid</h1>
+      <div className="scenario-selection">
         <h3>Select Scenario</h3>
         <div>
           <select value={selectedScenario} onChange={handleScenarioChange}>
@@ -68,7 +68,7 @@ const FirstAid = () => {
             ))}
           </select>
         </div>
-        <button onClick={handleSendQuery} disabled={loading}>
+        <button className="btn" onClick={handleSendQuery} disabled={loading}>
           {loading ? 'Fetching advice...' : 'Get First Aid Advice'}
         </button>
       </div>

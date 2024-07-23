@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode'; // Correct import for jwtDecode
+import '../styles/Chat.css';
 
 const Chat = () => {
     const [messages, setMessages] = useState([]);
@@ -68,8 +69,8 @@ const Chat = () => {
     };
 
     return (
-        <div>
-            <h1>Chat</h1>
+        <div className="chat-page">
+            <h1 className="chat-title">Chat</h1>
             <div className="chat-box">
                 {messages.map((message, index) => (
                     <div key={index} className={message.user ? 'user-message' : 'bot-message'}>
@@ -84,11 +85,13 @@ const Chat = () => {
                     onChange={handleInputChange}
                     onKeyPress={handleKeyPress}
                     placeholder="Type your message here..."
+                    className="input-field"
                 />
-                <button onClick={handleSendMessage}>Send</button>
+                <button onClick={handleSendMessage} className="send-btn">Send</button>
             </div>
         </div>
     );
 };
 
 export default Chat;
+
